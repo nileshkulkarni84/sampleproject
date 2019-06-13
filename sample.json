@@ -1,0 +1,600 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+    "version": "1.0.0",
+    "title": "Swagger Petstore",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "petstore.swagger.io",
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "GetCardBin",
+      "description": "Gets required information regarding card",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "Authorization",
+      "description": "Describes parameters for various transaction types"
+    },
+    {
+      "name": "user",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/GetCardBin": {
+      "post": {
+        "tags": [
+          "GetCardBin"
+        ],
+        "summary": "Gets requied information regarding a particular card",
+        "description": "",
+        "operationId": "cardbin",
+		"content": "application/xml",
+        "consumes": [
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Following parameters are utilized to get the required information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetCardBin"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+	
+    },
+	
+	"/sale": {
+		"post": {
+        "tags": [
+          "Authorization"
+        ],
+        "summary": "Sale",
+        "description": "",
+        "operationId": "cardbin",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Following parameters are utilized to get the required information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetCardBin"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+		}
+	},	
+	
+  },
+  
+  "definitions": {
+    "Order": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "petId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "shipDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "Order Status",
+          "enum": [
+            "placed",
+            "approved",
+            "delivered"
+          ]
+        },
+        "complete": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "xml": {
+        "name": "Order"
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "userStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "User Status"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Category"
+      }
+    },
+    "Tag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Tag"
+      }
+    },
+    "GetCardBin": {
+      "type": "object",
+      "required": [
+        "POSID",
+		"LookUpFlag",
+		"AllowKeyedEntry",
+        "photoUrls"
+      ],
+      "properties": {
+        "POSID": {
+          "type": "string",
+		  "maxLength":"20",
+		  "description": "Source POS ID"
+        },
+		 "APPID": {
+          "type": "string",
+		  "maxLength":"10",
+		  "description": "POS Application ID"
+        },
+		 "CCTID": {
+          "type": "string",
+		  "maxLength":"25",
+		  "description": "Destination CCT ID"
+        },
+		"ADSDKSpecVer": {
+          "type": "integer",
+		  "maxLength":"23",
+		  "description": " ADSDK Specification document Version"
+        },
+		"LookUpFlag": {
+          "type": "integer",
+		  "maxLength":"1",
+		  "minLength":"1",
+		  "format":"int64",
+		  "description": "This numeric field which contains any of above values",
+		  "enum": [
+            "0",
+            "1",
+            "2",
+			"3",
+			"4",
+			"5",
+			"6",
+			"7",
+			"8",
+			"9",
+          ]
+        },
+		
+		"AllowKeyedEntry": {
+          "type": "string",
+		  "maxLength":"1",
+		  "minLength":"1",
+		  "description": "This will determine whether to allow Keyed Entry of PAN (Y/N) on CCT"
+        },
+		"AllowManualFallback": {
+          "type": "string",
+		  "maxLength":"1",
+		  "minLength":"1",
+		  "description": "This determines to go for Manual Entry after ‘X’ Bad Swipes. (Default ‘Y’)
+						Y – Go to Manual Entry after ‘X’ bad swipes.
+						N- Do not go to Manual Entry after ‘X’ bad swipes. Send Response back to POS"
+        },
+		"EntrySource": {
+          "type": "string",
+		  "maxLength":"1",
+		  "minLength":"1",
+		  "description": "Entry Source as follow K- Keyed/ Manual Entry B-Barcode Scan O-Mail Order (E-commerce)
+In case of Wallet Identifier value=5(AliPay) or Value=8 (ChasePay) make sure below parameters are requied
+1. AlternatePaymentData CardNumber Field should be populated with AliPay/ChasePay Barcode data
+2. EntrySource Field should be populated with “B” to indicate Barcode Scan"
+        },
+		"CardNumber": {
+          "type": "integer",
+		  "maxLength":"24",
+		  "description": "Barcode Scan Card Number or Manual Card Entry from POS."
+        },
+		"CardDataSource": {
+          "type": "integer",
+		  "maxLength":"24",
+		  "description": "This field will be utilized by outside payment scenarios e.g. Petroleum Industries."
+        },
+		"EncryptionMode": {
+          "type": "integer",
+		  "maxLength":"2",
+		  "description": "This field identifies whether the account data information in request is in encrypted format or not. This field will be utilized by outside payment scenarios e.g. Petroleum Industries EncryptionMode Flag. 00 : Not encrypted data. 01: Aurus P2PE encrypted data, 02: Processor encrypted data",
+		  "enum": [
+            "00",
+            "01",
+            "02"
+          ]
+        },
+		"TrackData": {
+          "type": "string",
+		  "maxLength":"1500",
+		  "minLength":"0",
+		  "description": "
+			This field will be utilized by outside payment scenarios e.g. Petroleum Industries
+			
+			
+			This identifies the customer account data information. The cardholder account data information can be read from the card, it can be manually entered or it can be swiped/EMV chip through any encryption device.
+			
+			
+			The data can contain one of the following
+			
+			
+			1. Encrypted/Plain Track 1 Data (If CardDataSource is 1)
+			
+			
+			2. Encrypted/Plain Track 2 Data (If CardDataSource is 2)
+			
+			
+			3. Encrypted/Plain Manually Entered Data (If CardDataSource is 3)
+			
+			
+			4. Encrypted/Plain Both Track 1 and Track 2 data separated by a tilde (~). (If CardDataSource is 4). E.g.: 4Track1Data~Track2Data
+			
+			
+			5. Encrypted/Plain EMV track2 Data i.e 57 tag (If CardDataSource is 6)
+			
+			
+			**Track 1 Read Data**
+			
+			
+			This is a variable length field with a maximum data length of 76 characters. The Track 1 data is converted from six bit characters to seven bit characters as defined in ANSI X3.4. The starting sentinel, ending sentinel and LRC are removed by the form factor as part of this conversion process.
+			
+			
+			**Track 2 Read Data** 
+			
+			This is a variable length field with a maximum of 37 characters. The Track 2 data is converted from four bit characters to seven bit characters as per ANSI X3.4. As part of the conversion, the starting sentinel, ending sentinel and LRC characters are removed by the form factor.
+			
+			
+			**Manually Entered Account Data**
+			
+			
+			Customer credit card data may be key entered when the card magnetic stripe cannot be read, if the card is not physically present, or when a card reader is not available. Direct debit cards may not be manually entered. The format of the manually entered account data for AMEX card is shown in Table 1.6. The format of manually entered data for VISA cards is shown in Table 1.7.
+			
+			
+			**Encrypted Read Data**
+			
+			
+			This is a variable length field with a maximum data length of 200 characters. For Swipe/EMV/Manual the Track1/Track2/Track1+track2/Manual will encrypted through the injected key in device. For manual case the card No, the expiry, and CVV will encrypted with 1D separator.
+			
+			
+			
+			**Manually Entered Account Data Format for AMEX Cards**
+			
+			
+			`Account Number` : Variable length: 5 – 24
+			
+			
+			`Record Separator` : 1 character: fixed value Hex 1D
+			
+			
+			`Expiration Date` : MMYY
+			
+			
+			`Record Separator` : 1 character: fixed value Hex 1D
+			
+			
+			`CID` : Fixed length, optional: 0 or 4AN, for AMEX transactions only (optional) 
+			"
+		},
+		"EMVDetailsData": {
+          "type": "string",
+		  "maxLength":"1500",
+		  "minLength":"0",
+		  "description": "
+			This field identifies EMV data in request and it compulsory for all EMV transactions. It contains tag and its values in below format.
+TagName~TagValue<RS>TagName~TagValue 
+
+
+This field will be utilized by outside payment scenarios e.g. Petroleum Industries
+			"
+		},
+		"CVVData": {
+          "type": "integer",
+		"description": "
+			This field identifies the CVV of the card against the selected Card Identifier in request
+
+			
+			This field will be utilized by outside payment scenarios e.g. Petroleum Industries
+			"
+		},
+		"ExpiryDate": {
+          "type": "string",
+		  "maxLength":"4",
+		  "minLength":"4",
+		  "default":"MMYY",
+		  "description": "
+			Expiry date in MMYY This field will be utilized by outside payment scenarios e.g. Petroleum Industries"
+		},
+		"PINBlock": {
+          "type": "string",
+		  "maxLength":"16",
+		  "minLength":"16",
+		  "description": "
+			This field will hold the Encrypted PIN This field will be utilized by outside payment scenarios e.g. Petroleum Industries"
+		},
+		"KSNBlock": {
+          "type": "string",
+		  "maxLength":"12",
+		  "minLength":"20",
+		  "description": "
+			This field will hold the Encrypted KSN This field will be utilized by outside payment scenarios e.g. Petroleum Industries"
+		},
+		"KI": {
+          "type": "string",
+		  "maxLength":"20",
+		  "minLength":"20",
+		  "description": "
+			KI# that will be used to do the Auth's."
+		},
+		"KIType": {
+          "type": "string",
+		  "maxLength":"2",
+		  "minLength":"2",
+		  "description": "
+			KI Type - mandatory, if KI# value is passed"
+		},
+		"CashBackFlag": {
+          "type": "integer",
+		  "description": "
+			Indicates whether CCT should prompt for Cash Back Option to customer"
+		},
+		"TenderAmount": {
+          "type": "integer",
+		  "description": "
+			Tender Amount will display on CCT."
+		},
+		"PromptConfirmFlag": {
+          "type": "integer",
+		  "description": "
+			This determines to go for swipe screen without showing confirmation screen **(Default ‘1’)**
+
+			
+			`0` – Goes to Swipe screen on CCT without showing confirmation screen
+
+			
+			`1`- Shows confirmation screen on CCT"
+		},
+		"ProcessingMode": {
+          "type": "integer",
+		  "description": "
+			Summarizes the result of the overall request. This field can contain one of the following values
+
+			
+			`A` : Accepted.
+			
+			
+			`D` : Rejected, Original auth will be reversed
+			
+			
+			`E` : Fraud Suspected, Order is in ESCALATE status at Aurus
+			
+			
+			`R` : Fraud Suspected, Order is in REVIEW status at Aurus
+			
+			
+			`E_nnn` : ERRORs returned by Kount, Decision not made
+			
+			
+			`ERROR` : ERROR occurred in Aurus while connecting to Aurus Fraund Engine, Decision not mad"
+		},
+		"CRMToken": {
+          "type": "integer",
+		  "description": "
+			CRM Token generated using algorithms."
+		},
+		"ValidateEmail": {
+          "type": "string",
+		  "maxLength":"50",
+		  "description": "
+			Pass Email Address to be validated"
+		},
+		"ValidatePhoneNum": {
+          "type": "string",
+		  "maxLength":"12",
+		  "description": "
+			Pass Phone# to be validated"
+		},
+		"ValidateZipCode": {
+          "type": "string",
+		  "maxLength":"9",
+		  "description": "
+			Pass Zip/Postal Code to be validated"
+		},
+		"AdditionalTags": {
+          "type": "string",
+		  "maxLength":"1000",
+		  "description": "
+			Additional Parameters that is added to accomplish any new feature will be added in this tags & will be send directly to AurusPay® Host."
+		},
+		"MerchantIdentifier": {
+          "type": "integer",
+		  "description": "
+			This will be assigned by AurusPay® Host
+			
+			
+			**- Mandatory in case Ecommerce**
+			
+			"
+		},
+		"StoreId": {
+          "type": "integer",
+		  "description": "
+			This will be assigned by AurusPay® Host
+			
+			
+			**- Mandatory in case Ecommerce**
+			
+			"
+		},
+		"TerminalId": {
+          "type": "integer",
+		  "description": "
+			This will be assigned by AurusPay® Host
+			
+			
+			**- Mandatory in case Ecommerce**
+			
+			"
+		},
+		"CVV": {
+          "type": "integer",
+		  "description": "
+			This field identifies the CVV of the card against the selected Card Identifier in request
+			
+			
+			**- Mandatory in case Ecommerce**
+			"
+		},
+		"ClerkID": {
+          "type": "integer",
+		  "description": "
+			Clerk identification number"
+		}
+       
+       
+      },
+      "xml": {
+        "name": "Pet"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
